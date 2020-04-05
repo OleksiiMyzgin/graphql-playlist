@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useQuery, useMutation } from '@apollo/react-hooks';
 
-import { GET_AUTHORS_QUERY, ADD_BOOK_MUTATION } from '../queries'
+import { GET_AUTHORS_QUERY, ADD_BOOK_MUTATION, GET_BOOKS_QUERY } from '../queries'
 
 type Author = {
   id : string;
@@ -38,7 +38,10 @@ function AddBook() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    saveBook({ variables : { name, genre, authorId } });
+    saveBook({
+      variables: { name, genre, authorId },
+      refetchQueries: [{ query: GET_BOOKS_QUERY }]
+    });
   }
 
   return (
