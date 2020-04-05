@@ -1,7 +1,7 @@
-import React, {useState } from 'react';
-import { useQuery } from '@apollo/react-hooks';
+import React, { useState } from 'react';
+import { useQuery, useMutation } from '@apollo/react-hooks';
 
-import { GET_AUTHORS_QUERY } from '../queries'
+import { GET_AUTHORS_QUERY, ADD_BOOK_MUTATION } from '../queries'
 
 type Author = {
   id : string;
@@ -12,18 +12,33 @@ type AuthorsList = {
   authors: Author[]
 }
 
+type Book = {
+  id : string;
+  name : string;
+}
+
+type MutationVars = {
+  name: string;
+  genre: string;
+  authorId: string;
+}
+
 function AddBook() {
   const [name, setName] = useState('');
   const [genre, setGenre] = useState('');
   const [authorId, setAuthorId] = useState('');
 
-  const { loading, error, data } = useQuery<AuthorsList>(GET_AUTHORS_QUERY);
+  const getAuthorsQuery = useQuery<AuthorsList>(GET_AUTHORS_QUERY);
+  const [ saveBook, bookData ] = useMutation<Book, MutationVars>(
+    ADD_BOOK_MUTATION,
+  );
 
-  if (error) return <p>Error: {error.message}</p>;
+  if (getAuthorsQuery.error) return <p>Error: {getAuthorsQuery.error.message}</p>;
+  if (bookData.error) return <p>Error: {bookData.error.message}</p>;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(name, genre, authorId);
+    saveBook({ variables : { name, genre, authorId } });
   }
 
   return (
@@ -40,11 +55,11 @@ function AddBook() {
         <label>Author:</label>
         <select onChange={(e) => setAuthorId(e.currentTarget.value)}>
           <option>Select author</option>
-          {loading ? (
+          {getAuthorsQuery.loading ? (
             <option disabled>Loading authors</option>
           ) : (
-            data &&
-            data.authors.map((author) => {
+            getAuthorsQuery.data &&
+            getAuthorsQuery.data.authors.map((author) => {
               return (
                 <option key={author.id} value={author.id}>
                   {author.name}
