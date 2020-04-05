@@ -1,6 +1,7 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import { gql } from 'apollo-boost';
+
+import { GET_BOOKS_QUERY } from '../queries'
 
 type Book = {
   id : string;
@@ -10,15 +11,6 @@ type Book = {
 type BooksList = {
   books: Book[]
 }
-
-const GET_BOOKS_QUERY = gql`
-  {
-    books {
-      name
-      id
-    }
-  }
-`;
 
 function BookList() {
   const { loading, error, data } = useQuery<BooksList>(GET_BOOKS_QUERY);
