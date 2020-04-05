@@ -7,7 +7,7 @@ type Book = {
   name : string;
 }
 
-type Books = {
+type BooksList = {
   books: Book[]
 }
 
@@ -21,7 +21,7 @@ const GET_BOOKS_QUERY = gql`
 `;
 
 function BookList() {
-  const { loading, error, data } = useQuery<Books>(GET_BOOKS_QUERY);
+  const { loading, error, data } = useQuery<BooksList>(GET_BOOKS_QUERY);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
