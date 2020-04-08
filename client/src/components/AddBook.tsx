@@ -1,48 +1,53 @@
-import React, { useState } from 'react';
-import { useQuery, useMutation } from '@apollo/react-hooks';
+import React, { useState } from "react";
+import { useQuery, useMutation } from "@apollo/react-hooks";
 
-import { GET_AUTHORS_QUERY, ADD_BOOK_MUTATION, GET_BOOKS_QUERY } from '../queries'
+import {
+  GET_AUTHORS_QUERY,
+  ADD_BOOK_MUTATION,
+  GET_BOOKS_QUERY,
+} from "../queries";
 
 type Author = {
-  id : string;
-  name : string;
-}
+  id: string;
+  name: string;
+};
 
 type AuthorsList = {
-  authors: Author[]
-}
+  authors: Author[];
+};
 
 type Book = {
-  id : string;
-  name : string;
-}
+  id: string;
+  name: string;
+};
 
 type MutationVars = {
   name: string;
   genre: string;
   authorId: string;
-}
+};
 
 function AddBook() {
-  const [name, setName] = useState('');
-  const [genre, setGenre] = useState('');
-  const [authorId, setAuthorId] = useState('');
+  const [name, setName] = useState("");
+  const [genre, setGenre] = useState("");
+  const [authorId, setAuthorId] = useState("");
 
   const getAuthorsQuery = useQuery<AuthorsList>(GET_AUTHORS_QUERY);
-  const [ saveBook, bookData ] = useMutation<Book, MutationVars>(
+  const [saveBook, bookData] = useMutation<Book, MutationVars>(
     ADD_BOOK_MUTATION,
   );
 
-  if (getAuthorsQuery.error) return <p>Error: {getAuthorsQuery.error.message}</p>;
+  if (getAuthorsQuery.error)
+    return <p>Error: {getAuthorsQuery.error.message}</p>;
   if (bookData.error) return <p>Error: {bookData.error.message}</p>;
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     saveBook({
       variables: { name, genre, authorId },
-      refetchQueries: [{ query: GET_BOOKS_QUERY }]
+      refetchQueries: [{ query: GET_BOOKS_QUERY }],
     });
-  }
+  };
 
   return (
     <form id="add-book" onSubmit={handleSubmit}>
