@@ -7,14 +7,7 @@ import { BookDetails } from "../BookDetails";
 import { List, BookListItem } from "./styles";
 import { DetailsBlock } from "../BookDetails/styles";
 
-type Book = {
-  id: string;
-  name: string;
-};
-
-type BooksList = {
-  books: Book[];
-};
+import { BooksList } from "./types";
 
 function BookList() {
   const [bookId, setBookId] = useState<string | null>(null);

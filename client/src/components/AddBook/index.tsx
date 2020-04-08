@@ -9,25 +9,7 @@ import {
 
 import { Form, Field, Label, Input, Select, Button } from "./styles";
 
-type Author = {
-  id: string;
-  name: string;
-};
-
-type AuthorsList = {
-  authors: Author[];
-};
-
-type Book = {
-  id: string;
-  name: string;
-};
-
-type MutationVars = {
-  name: string;
-  genre: string;
-  authorId: string;
-};
+import { AuthorsList, Book, MutationVars } from "./types";
 
 function AddBook() {
   const [name, setName] = useState("");

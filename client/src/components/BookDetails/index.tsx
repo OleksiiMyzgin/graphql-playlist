@@ -3,34 +3,7 @@ import { useQuery } from "@apollo/react-hooks";
 
 import { GET_BOOK_QUERY } from "../../queries";
 
-type Book = {
-  id: string;
-  name: string;
-};
-
-type Author = {
-  id: string;
-  name: string;
-  age: number;
-  books: Book[];
-};
-
-type BookQuery = {
-  book: {
-    id: string;
-    name: string;
-    genre: string;
-    author: Author;
-  };
-};
-
-type QueryVars = {
-  id: string;
-};
-
-type Props = {
-  bookId: string;
-};
+import { Props, BookQuery, QueryVars } from "./types";
 
 export function BookDetails({ bookId }: Props) {
   const { loading, error, data } = useQuery<BookQuery, QueryVars>(
