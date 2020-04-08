@@ -5,7 +5,7 @@ import {
   GET_AUTHORS_QUERY,
   ADD_BOOK_MUTATION,
   GET_BOOKS_QUERY,
-} from "../queries";
+} from "../../queries";
 
 type Author = {
   id: string;

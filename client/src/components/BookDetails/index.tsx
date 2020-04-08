@@ -1,7 +1,7 @@
 import React from "react";
 import { useQuery } from "@apollo/react-hooks";
 
-import { GET_BOOK_QUERY } from "../queries";
+import { GET_BOOK_QUERY } from "../../queries";
 
 type Book = {
   id: string;
