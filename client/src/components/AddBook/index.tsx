@@ -74,7 +74,7 @@ function AddBook() {
           )}
         </Select>
       </Field>
-      <Button>+</Button>
+      <Button>Add</Button>
     </Form>
   );
 }
