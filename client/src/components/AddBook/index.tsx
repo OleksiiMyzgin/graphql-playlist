@@ -7,6 +7,8 @@ import {
   GET_BOOKS_QUERY,
 } from "../../queries";
 
+import { Form, Field, Label, Input, Select, Button } from "./styles";
+
 type Author = {
   id: string;
   name: string;
@@ -50,18 +52,31 @@ function AddBook() {
   };
 
   return (
-    <form id="add-book" onSubmit={handleSubmit}>
-      <div className="field">
-        <label>Book name:</label>
-        <input type="text" onChange={(e) => setName(e.currentTarget.value)} />
-      </div>
-      <div className="field">
-        <label>Genre:</label>
-        <input type="text" onChange={(e) => setGenre(e.currentTarget.value)} />
-      </div>
-      <div className="field">
-        <label>Author:</label>
-        <select onChange={(e) => setAuthorId(e.currentTarget.value)}>
+    <Form onSubmit={handleSubmit}>
+      <Field>
+        <Label>Book name:</Label>
+        <Input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.currentTarget.value)}
+        />
+      </Field>
+      <Field>
+        <Label>Genre:</Label>
+        <Input
+          type="text"
+          value={genre}
+          onChange={(e) => setGenre(e.currentTarget.value)}
+        />
+      </Field>
+      <Field>
+        <Label>Author:</Label>
+        <Select
+          as="select"
+          onChange={(e: React.FormEvent<HTMLSelectElement>) =>
+            setAuthorId(e.currentTarget.value)
+          }
+        >
           <option>Select author</option>
           {getAuthorsQuery.loading ? (
             <option disabled>Loading authors</option>
@@ -75,10 +90,10 @@ function AddBook() {
               );
             })
           )}
-        </select>
-      </div>
-      <button>+</button>
-    </form>
+        </Select>
+      </Field>
+      <Button>+</Button>
+    </Form>
   );
 }
 

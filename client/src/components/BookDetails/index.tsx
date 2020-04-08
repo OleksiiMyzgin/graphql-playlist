@@ -62,5 +62,5 @@ export function BookDetails({ bookId }: Props) {
     }
   };
 
-  return <div className="book-details">{displayBookDetails()}</div>;
+  return <>{displayBookDetails()}</>;
 }

@@ -4,6 +4,9 @@ import { useQuery } from "@apollo/react-hooks";
 import { GET_BOOKS_QUERY } from "../../queries";
 import { BookDetails } from "../BookDetails";
 
+import { List, BookListItem } from "./styles";
+import { DetailsBlock } from "../BookDetails/styles";
+
 type Book = {
   id: string;
   name: string;
@@ -22,19 +25,21 @@ function BookList() {
 
   return (
     <div>
-      <ul className="book-list">
+      <List>
         {data &&
           data.books.map((book) => (
-            <li key={book.id} onClick={(e) => setBookId(book.id)}>
+            <BookListItem key={book.id} onClick={(e) => setBookId(book.id)}>
               {book.name}
-            </li>
+            </BookListItem>
           ))}
-      </ul>
-      {bookId ? (
-        <BookDetails bookId={bookId} />
-      ) : (
-        <div>No Book selected...</div>
-      )}
+      </List>
+      <DetailsBlock>
+        {bookId ? (
+          <BookDetails bookId={bookId} />
+        ) : (
+          <div>No Book selected...</div>
+        )}
+      </DetailsBlock>
     </div>
   );
 }
